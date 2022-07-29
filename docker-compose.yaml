@@ -1,12 +1,9 @@
-version: '2'
+version: "3.8"
 services:
-    web:
-        build: .
-        ports:
-            - "5001:5001"
-        volumes:
-            - .:/code
-        depends_on:
-            - redis
-    redis:
-        image: redis
+  app_container:
+    image:
+    container_name: 
+    build: 
+      context: ./
+    enviroment:
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
