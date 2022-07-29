@@ -7,4 +7,8 @@
 
 The objective for this DevOps project is to design and create a web application through Flask that integrates with two databases sharing a one-to-many relationship and demonstrates CRUD functionality.
 
-My Web Application was created 
+My Web Application will be created using the following: Python, Flask, Ubuntu Linux, Docker, Jenkins and Microsoft Azure.
+
+## My Project
+
+My app will be an easily manageable database that can be used by car hire companies to keep records of any vehicle booking details, as well as the details of customers.
