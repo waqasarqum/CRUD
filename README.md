@@ -31,7 +31,28 @@ Trello is kanban-style, list-making application. I used this to keep track of my
 
 ### MoSCoW Prioritisation
 
-Trello was used with a colour co-ordinated MoSCoW reference.
+Trello was used with a colour co-ordinated MoSCoW reference in order to prioritse work load in order of importance.
+
+![image](https://user-images.githubusercontent.com/106072502/181854686-3837f9de-f945-4b69-a3ba-931edabc5568.png)
+
+### Entity Relationship Diagram (ERD)
+
+![image](https://user-images.githubusercontent.com/106072502/181854865-3073de39-f5b0-4214-a0b6-73245b470a78.png)
+
+### Risk Assessment
+
+As project week progressed I discovered many more potential risks that I had initially predicted. In light my risk assessment grew.
+
+![image](https://user-images.githubusercontent.com/106072502/181855225-e8eb2c7d-e315-4277-92ba-7bd1a600772a.png)
+
+### Pipeline Diagram
+
+![image](https://user-images.githubusercontent.com/106072502/181855563-312cb0c9-f4ef-4d96-962b-8937cab20026.png)
+
+
+
+
+
 
 
 
