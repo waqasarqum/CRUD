@@ -12,3 +12,12 @@ My Web Application will be created using the following: Python, Flask, Ubuntu Li
 ## My Project
 
 My app will be an easily manageable database that can be used by car hire companies to keep records of any vehicle booking details, as well as the details of customers.
+
+## Planning, Design and Project Tracking
+
+### Trello
+
+Trello is kanban-style, list-making application. I used this to keep track of my project and ensure all tasks were planned for and completed in a timly manner.
+
+### MoSCoW Prioritisation
+![image](https://user-images.githubusercontent.com/106072502/181819329-c36c7be5-057a-4fb5-b408-73367236efa2.png)
