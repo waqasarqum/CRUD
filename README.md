@@ -1,5 +1,5 @@
 ### DfE Cloud Specialism - Final Project
-## By - Waqas Arqum
+## Waqas Arqum
 
 ## Objective
 
