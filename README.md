@@ -19,7 +19,7 @@ My app will be an easily manageable database that can be used by car hire compan
 
 Trello is kanban-style, list-making application. I used this to keep track of my project and ensure all tasks were planned for and completed in a timly manner.
 
- 
+
  
  
  
