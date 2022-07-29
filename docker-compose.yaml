@@ -6,4 +6,9 @@ services:
     build: 
       context: ./
     enviroment:
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    deploy:
+      replicas: 3
+    ports:
+    - target: 5001
+      published: 5001
+      protocol: tcp
