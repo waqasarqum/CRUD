@@ -1,35 +1,76 @@
-pipeline{
-    agent any
-    environment{
-        DOCKERHUB_LOGIN=credentials('DOCKERHUB_LOGIN')
-        DATABASE_URI=credentials('DATABASE_URI')
+def img
+pipeline {
+    environment {
+        registry = "waqasarqum/python-jenkins" //To push an image to Docker Hub, you must first name your local image using your Docker Hub username and the repository name that you created through Docker Hub on the web.
+        registryCredential = 'docker-hub-login'
+        dockerImage = ''
     }
-    stages{
-        stage('Testing app'){
-            steps{
-                sh "bash scripts/tests.sh"
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/waqasarqum/CRUD.git'
             }
         }
-        stage('Installing dependencies'){
+
+        stage ('Stop previous running container'){
             steps{
-                sh "bash scripts/dependencies.sh"
+                sh returnStatus: true, script: 'docker stop $(docker ps -a | grep ${JOB_NAME} | awk \'{print $1}\')'
+                sh returnStatus: true, script: 'docker rmi $(docker images | grep ${registry} | awk \'{print $3}\') --force' //this will delete all images
+                sh returnStatus: true, script: 'docker rm ${JOB_NAME}'
             }
         }
-        stage('Building containers'){
-            steps{
-                sh "docker login -u ${DOCKERHUB_LOGIN_USR} -p ${DOCKERHUB_LOGIN_PSW}"
-                sh "bash scripts/containers.sh"
+
+
+        stage('Build Image') {
+            steps {
+                script {
+                    img = registry + ":${env.BUILD_ID}"
+                    println ("${img}")
+                    dockerImage = docker.build("${img}")
+                }
             }
         }
-        stage('Running ansible tasks'){
-            steps{
-                sh "bash scripts/ansible.sh"
+
+
+
+        stage('Test - Run Docker Container on Jenkins node') {
+           steps {
+
+                sh label: '', script: "docker run -d --name ${JOB_NAME} -p 5001:5001 ${img}"
+          }
+        }
+
+        stage('Push To DockerHub') {
+            steps {
+                script {
+                    docker.withRegistry( 'https://registry.hub.docker.com ', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
-        stage('Deploying'){
-            steps{
-                sh "bash scripts/deploy.sh"
+
+        stage('Deploy to Test Server') {
+            steps {
+                script {
+                    def stopcontainer = "docker stop ${JOB_NAME}"
+                    def delcontName = "docker rm ${JOB_NAME}"
+                    def delimages = 'docker image prune -a --force'
+                    def drun = "docker run -d --name ${JOB_NAME} -p 5001:5001 ${img}"
+                    println "${drun}"
+                    sshagent(['docker-test']) {
+                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no docker-swarm@20.90.118.13 ${stopcontainer} "
+                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no docker-swarm@20.90.118.13 ${delcontName}"
+                        sh returnStatus: true, script: "ssh -o StrictHostKeyChecking=no docker-swarm@20.90.118.13 ${delimages}"
+
+                    // some block
+                        sh "ssh -o StrictHostKeyChecking=no docker-swarm@20.90.118.13 ${drun}"
+                    }
+                }
             }
         }
+
+
     }
 }
